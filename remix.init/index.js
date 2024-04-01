@@ -5,6 +5,7 @@ const path = require('path')
 
 const toml = require('@iarna/toml')
 const sort = require('sort-package-json')
+const {default: inquirer} = require('inquirer')
 
 function escapeRegExp(string) {
   // $& means the whole matched string
@@ -21,6 +22,8 @@ async function main({rootDirectory}) {
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, '.env.example')
   const ENV_PATH = path.join(rootDirectory, '.env')
   const PACKAGE_JSON_PATH = path.join(rootDirectory, 'package.json')
+  const SITEMAP_PATH = path.join(rootDirectory, 'remix-sitemap.config.cjs')
+  const SERVER_PATH = path.join(rootDirectory, 'server.js')
 
   const REPLACER = 'remix-express-template'
 
@@ -31,16 +34,26 @@ async function main({rootDirectory}) {
     // get rid of anything that's not allowed in an app name
     .replace(/[^a-zA-Z0-9-_]/g, '-')
 
-  const [prodContent, readme, env, packageJson] = await Promise.all([
-    fs.readFile(FLY_TOML_PATH, 'utf-8'),
-    fs.readFile(README_PATH, 'utf-8'),
-    fs.readFile(EXAMPLE_ENV_PATH, 'utf-8'),
-    fs.readFile(PACKAGE_JSON_PATH, 'utf-8'),
-  ])
+  const [prodContent, readme, env, packageJson, siteMap, serverFile] =
+    await Promise.all([
+      fs.readFile(FLY_TOML_PATH, 'utf-8'),
+      fs.readFile(README_PATH, 'utf-8'),
+      fs.readFile(EXAMPLE_ENV_PATH, 'utf-8'),
+      fs.readFile(PACKAGE_JSON_PATH, 'utf-8'),
+      fs.readFile(SITEMAP_PATH, 'utf-8'),
+      fs.readFile(SERVER_PATH, 'utf-8'),
+    ])
 
+  env.replace(/^TOAST_SECRET=.*$/m, `TOAST_SECRET="${getRandomString(32)}"`)
+  env.replace(/^CSRF_SECRET=.*$/m, `CSRF_SECRET="${getRandomString(32)}"`)
+  env.replace(/^VERIFY_SECRET=.*$/m, `VERIFY_SECRET="${getRandomString(32)}"`)
+  env.replace(
+    /^HONEYPOT_SECRET=.*$/m,
+    `HONEYPOOT_SECRET="${getRandomString(32)}"`,
+  )
   const newEnv = env.replace(
     /^SESSION_SECRET=.*$/m,
-    `SESSION_SECRET="${getRandomString(16)}"`,
+    `SESSION_SECRET="${getRandomString(32)}"`,
   )
 
   const prodToml = toml.parse(prodContent)
@@ -58,6 +71,32 @@ async function main({rootDirectory}) {
       2,
     ) + '\n'
 
+  const {websiteUrl} = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'websiteUrl',
+      message:
+        'What is the URL of your website? It will be used for the sitemap. (Enter to skip)',
+    },
+  ])
+
+  const trimmedWebsiteUrl = websiteUrl.trim()
+
+  const newSitemap = siteMap.replace(
+    /siteUrl: '<YOUR_DOMAIN_URL>'/,
+    `siteUrl: '${trimmedWebsiteUrl}'`,
+  )
+  const newServerFile = serverFile.replace(
+    /process.env.NODE_ENV === 'production'\n\s+\? '<YOUR_DOMAIN_URL>'/,
+    `process.env.NODE_ENV === 'production'\n    ? '${trimmedWebsiteUrl}'`,
+  )
+
+  if (!trimmedWebsiteUrl) {
+    console.log(
+      `Skipped. Don't forget to update the sitemap with your website URL later in remix-sitemap.config.cjs and server.js.`,
+    )
+  }
+
   await Promise.all([
     fs.writeFile(FLY_TOML_PATH, toml.stringify(prodToml)),
     fs.writeFile(README_PATH, newReadme),
@@ -67,6 +106,12 @@ async function main({rootDirectory}) {
       path.join(rootDirectory, 'remix.init', 'gitignore'),
       path.join(rootDirectory, '.gitignore'),
     ),
+    trimmedWebsiteUrl
+      ? fs.writeFile(SITEMAP_PATH, newSitemap)
+      : Promise.resolve(),
+    trimmedWebsiteUrl
+      ? fs.writeFile(SERVER_PATH, newServerFile)
+      : Promise.resolve(),
   ])
 
   execSync(`npm run setup`, {stdio: 'inherit', cwd: rootDirectory})

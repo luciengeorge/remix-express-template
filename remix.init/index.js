@@ -5,7 +5,6 @@ const path = require('path')
 
 const toml = require('@iarna/toml')
 const sort = require('sort-package-json')
-const inquirer = require('inquirer')
 
 function escapeRegExp(string) {
   // $& means the whole matched string
@@ -17,6 +16,7 @@ function getRandomString(length) {
 }
 
 async function main({rootDirectory}) {
+  const inquirer = await import('inquirer')
   const README_PATH = path.join(rootDirectory, 'README.md')
   const FLY_TOML_PATH = path.join(rootDirectory, 'fly.toml')
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, '.env.example')
@@ -49,7 +49,7 @@ async function main({rootDirectory}) {
   env.replace(/^VERIFY_SECRET=.*$/m, `VERIFY_SECRET="${getRandomString(32)}"`)
   env.replace(
     /^HONEYPOT_SECRET=.*$/m,
-    `HONEYPOOT_SECRET="${getRandomString(32)}"`,
+    `HONEYPOT_SECRET="${getRandomString(32)}"`,
   )
   const newEnv = env.replace(
     /^SESSION_SECRET=.*$/m,

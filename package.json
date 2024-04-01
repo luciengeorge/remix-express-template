@@ -86,6 +86,7 @@
     "tailwindcss-animate": "^1.0.7",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.7.1",
     "typescript": "^5.4.3",
     "vite": "^5.2.7",
     "vite-tsconfig-paths": "^4.3.2"
@@ -94,7 +95,7 @@
     "node": ">=18.0.0"
   },
   "prisma": {
-    "seed": "ts-node --require tsconfig-paths/register prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts"
   },
   "eslintConfig": {
     "extends": [

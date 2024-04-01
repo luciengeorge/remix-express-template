@@ -71,7 +71,7 @@ async function main({rootDirectory}) {
       type: 'input',
       name: 'websiteUrl',
       message:
-        'What is the URL of your website? It will be used for the sitemap. (Enter to skip): ',
+        'What is the URL of your website? It will be used for the sitemap. (Enter to skip):',
       transformer: (input) => input.trim().toLowerCase(),
     },
   ])

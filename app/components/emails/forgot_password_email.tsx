@@ -28,12 +28,7 @@ export function ForgotPasswordEmail({
       <Body style={main}>
         <Container style={container}>
           <Section style={logoContainer}>
-            <Img
-              src="https://res.cloudinary.com/dr3dqrprs/image/upload/v1709384473/Logo_ansmkl.png"
-              width="120"
-              height="36"
-              alt="Skyla"
-            />
+            <Img src="logo.png" width="120" height="36" alt="Company logo" />
           </Section>
           <Heading style={h1}>Reset your password</Heading>
           <Text style={heroText}>
@@ -59,44 +54,44 @@ export function ForgotPasswordEmail({
             <Row style={footerLogos}>
               <Column style={{width: '66%'}}>
                 <Img
-                  src="https://res.cloudinary.com/dr3dqrprs/image/upload/v1709384473/Logo_ansmkl.png"
+                  src="logo.png"
                   width="120"
                   height="36"
-                  alt="Skyla"
+                  alt="Company Logo"
                 />
               </Column>
               <Column>
                 <Section>
                   <Row>
                     <Column>
-                      <Link href="https://www.skylachat.com">
+                      <Link href="#">
                         <Img
-                          src="https://res.cloudinary.com/dr3dqrprs/image/upload/v1702999675/chat-icon_ii1pz1.png"
+                          src="icon"
                           width="32"
                           height="32"
-                          alt="Skyla"
+                          alt="icon"
                           style={socialMediaIcon}
                         />
                       </Link>
                     </Column>
                     <Column>
-                      <Link href="https://apps.shopify.com/skyla-chat">
+                      <Link href="#">
                         <Img
-                          src="https://res.cloudinary.com/dr3dqrprs/image/upload/v1709384864/shopify-yIPKi2jg_kykwyb.webp"
+                          src="icon"
                           width="32"
                           height="32"
-                          alt="Shopify"
+                          alt="icon"
                           style={socialMediaIcon}
                         />
                       </Link>
                     </Column>
                     <Column>
-                      <Link href="https://www.linkedin.com/company/skylachat/">
+                      <Link href="#">
                         <Img
-                          src="https://res.cloudinary.com/dr3dqrprs/image/upload/v1709384956/linkedin-icon-1024x1024-net2o24e_fzwc8w.png"
+                          src="icon"
                           width="32"
                           height="32"
-                          alt="LinkedIn"
+                          alt="icon"
                           style={socialMediaIcon}
                         />
                       </Link>
@@ -110,7 +105,7 @@ export function ForgotPasswordEmail({
           <Section>
             <Link
               style={footerLink}
-              href="https://skylachat.com/blog"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -119,7 +114,7 @@ export function ForgotPasswordEmail({
             &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
             <Link
               style={footerLink}
-              href="https://skylachat.com/terms"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -128,13 +123,15 @@ export function ForgotPasswordEmail({
             &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
             <Link
               style={footerLink}
-              href="mailto:hello@skylachat.com"
+              href="mailto:email@example.com"
               target="_blank"
               rel="noopener noreferrer"
             >
               Contact Us
             </Link>
-            <Text style={footerText}>©{year} Skyla, All rights reserved.</Text>
+            <Text style={footerText}>
+              ©{year} Your Company, All rights reserved.
+            </Text>
           </Section>
         </Container>
       </Body>

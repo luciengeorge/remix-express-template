@@ -16,7 +16,7 @@ function getRandomString(length) {
 }
 
 async function main({rootDirectory}) {
-  const inquirer = await import('inquirer')
+  const {default: inquirer} = await import('inquirer')
   const README_PATH = path.join(rootDirectory, 'README.md')
   const FLY_TOML_PATH = path.join(rootDirectory, 'fly.toml')
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, '.env.example')
@@ -71,6 +71,7 @@ async function main({rootDirectory}) {
       2,
     ) + '\n'
   console.log('here8')
+  console.log(inquirer)
   const {websiteUrl} = await inquirer.prompt([
     {
       type: 'input',

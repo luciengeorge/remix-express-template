@@ -83,6 +83,7 @@
     "prisma": "*",
     "tailwindcss": "*",
     "tailwindcss-animate": "*",
+    "ts-node": "*",
     "tsconfig-paths": "*",
     "typescript": "*",
     "vite": "*",

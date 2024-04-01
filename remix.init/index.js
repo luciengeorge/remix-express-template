@@ -105,6 +105,26 @@ async function main({rootDirectory}) {
   ])
   execSync(`npm run setup`, {stdio: 'inherit', cwd: rootDirectory})
 
+  try {
+    console.log('Running Prettier on the project...')
+    execSync(`npx prettier --write .`, {stdio: 'inherit', cwd: rootDirectory})
+  } catch (error) {
+    console.error('Error running Prettier: ', error.message)
+  }
+
+  // Run git commands
+  try {
+    console.log('Running git commands...')
+    execSync(`git add .`, {stdio: 'inherit', cwd: rootDirectory})
+    execSync(`git commit -m "Initial commit"`, {
+      stdio: 'inherit',
+      cwd: rootDirectory,
+    })
+    console.log('Git commit created.')
+  } catch (error) {
+    console.error('Error running git commands: ', error.message)
+  }
+
   console.log(
     `Setup is complete. You're now ready to rock and roll 🤘
 

@@ -12,12 +12,7 @@ import {
   type LoaderFunctionArgs,
   type MetaFunction,
 } from '@remix-run/node'
-import {
-  Form,
-  useActionData,
-  useLoaderData,
-  useSearchParams,
-} from '@remix-run/react'
+import {Form, useActionData, useSearchParams} from '@remix-run/react'
 import {AuthenticityTokenInput} from 'remix-utils/csrf/react'
 import {HoneypotInputs} from 'remix-utils/honeypot/react'
 import {serverOnly$} from 'vite-env-only'
@@ -264,7 +259,6 @@ export async function action({request}: ActionFunctionArgs) {
 }
 
 export default function Verify() {
-  const data = useLoaderData<typeof loader>()
   const [searchParams] = useSearchParams()
   const isPending = useIsPending()
   const actionData = useActionData<typeof action>()

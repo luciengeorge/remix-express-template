@@ -2,12 +2,7 @@ import bcrypt from 'bcryptjs'
 import {prisma} from '~/utils/db.server'
 
 async function seed() {
-  const email = 'email@remix.run'
-
-  // cleanup the existing database
-  await prisma.user.delete({where: {email}}).catch(() => {
-    // no worries if it doesn't exist yet
-  })
+  const email = 'hello@remix.run'
 
   const hashedPassword = await bcrypt.hash('password', 10)
 

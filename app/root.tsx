@@ -45,7 +45,6 @@ export const links: LinksFunction = () => {
 export async function loader({request}: LoaderFunctionArgs) {
 	const ENV = getEnv()
 	const user = await getUser(request)
-	console.log(user)
 	const {toast, headers: toastHeaders} = await getToast(request)
 	const [csrfToken, csrfCookieHeader] = await csrf.commitToken(request)
 	const honeyProps = honeypot.getInputProps()

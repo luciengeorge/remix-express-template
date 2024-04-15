@@ -111,7 +111,6 @@ export async function getUserId(request: Request) {
 		request.headers.get('Cookie'),
 	)
 	const sessionId = cookieSession.get(sessionKey)
-	console.log(sessionId)
 	if (!sessionId) {
 		return null
 	}

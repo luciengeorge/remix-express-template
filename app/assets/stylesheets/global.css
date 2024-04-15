@@ -1,8 +1,8 @@
 .screen-height {
-  min-height: 100dvh;
+	min-height: 100dvh;
 }
 
 section:has(ol.toasts-wrapper) {
-  position: fixed;
-  z-index: 1000000;
+	position: fixed;
+	z-index: 1000000;
 }
